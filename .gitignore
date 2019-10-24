@@ -2,6 +2,6 @@
 .vscode
 .idea
 1region_3vpc_tgw/home/*.tfstate
-1region_3vpc_tgw/home/*.tfstate.backup
+1region_3vpc_tgw/home/*.tfstate.*
 /home/.terraform/*
 /1region_3vpc_tgw/home/terraform.tfvars
