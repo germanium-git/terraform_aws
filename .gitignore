@@ -1,5 +1,7 @@
 # Created by .ignore support plugin (hsz.mobi)
 .vscode
 .idea
+1region_3vpc_tgw/home/*.tfstate
+1region_3vpc_tgw/home/*.tfstate.backup
 /home/.terraform/*
 /1region_3vpc_tgw/home/terraform.tfvars
