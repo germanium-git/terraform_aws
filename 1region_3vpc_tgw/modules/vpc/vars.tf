@@ -16,3 +16,8 @@ variable "av_zone" {}
 variable "name" {}
 
 variable "tgw_id" {}
+
+variable "dependencies" {
+  type    = "list"
+  default = []
+}

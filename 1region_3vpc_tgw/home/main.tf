@@ -10,6 +10,7 @@ module "key" {
 module "vpc_frankfurt_az1" {
   source          = "../modules/vpc"
   name            = "vpc_az1"
+  dependencies    = [module.tgw_frankfurt.tgw_completed]
   aws_region      = "eu-central-1"
   av_zone         = "eu-central-1a"
   vpc_cidr        = "10.1.0.0/16"
@@ -26,6 +27,7 @@ module "vpc_frankfurt_az1" {
 module "vpc_frankfurt_az2" {
   source          = "../modules/vpc"
   name            = "vpc_az2"
+  dependencies    = [module.tgw_frankfurt.tgw_completed]
   aws_region      = "eu-central-1"
   av_zone         = "eu-central-1b"
   vpc_cidr        = "10.2.0.0/16"
@@ -43,6 +45,7 @@ module "vpc_frankfurt_az2" {
 module "vpc_frankfurt_az3" {
   source          = "../modules/vpc"
   name            = "vpc_az3"
+  dependencies    = [module.tgw_frankfurt.tgw_completed]
   aws_region      = "eu-central-1"
   av_zone         = "eu-central-1c"
   vpc_cidr        = "10.3.0.0/16"
@@ -102,6 +105,8 @@ module "ec2_frankfurt_az3" {
   access_key      = var.access_key
   secret_key      = var.secret_key
 }
+
+
 # Create Transit Gateway
 module "tgw_frankfurt" {
   source = "../modules/tgw"
@@ -114,4 +119,29 @@ module "tgw_frankfurt" {
   vpc_az1_id      = module.vpc_frankfurt_az1.vpc_id
   vpc_az2_id      = module.vpc_frankfurt_az2.vpc_id
   vpc_az3_id      = module.vpc_frankfurt_az3.vpc_id
+}
+
+
+# Create Edge VPC & FortiGate-VM
+module "edge" {
+  source = "../modules/edge-vpc"
+  aws_region              = "eu-central-1"
+  access_key              = var.access_key
+  secret_key              = var.secret_key
+  ami_id                  = "ami-01ccce1a224948c6f"
+  ssh_access_from         = var.ssh_access_from
+  instance_type           = "t2.small"
+  key_id                  = module.key.key_id
+  vpc-name                = "edge-vpc"
+  vpc_cidr                = "10.0.0.0/16"
+  av_zone_1               = "eu-central-1a"
+  av_zone_2               = "eu-central-1b"
+  public_nw_name_az1      = "public-fg-az1"
+  private_nw_name_az1     = "private-fg-az1"
+  public_nw_name_az2      = "public-fg-az2"
+  private_nw_name_az2     = "private-fg-az2"
+  public_subnet_cidr_az1  = "10.0.0.0/24"
+  private_subnet_cidr_az1 = "10.0.1.0/24"
+  public_subnet_cidr_az2  = "10.0.2.0/24"
+  private_subnet_cidr_az2 = "10.0.3.0/24"
 }

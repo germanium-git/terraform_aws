@@ -16,7 +16,7 @@ resource "aws_instance" "vm" {
   availability_zone = var.av_zone
 
   tags = {
-    Name = "HelloWorld"
+    Name = "TGW test"
   }
 }
 

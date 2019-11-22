@@ -4,6 +4,13 @@ provider "aws" {
   secret_key = var.secret_key
 }
 
+
+resource "null_resource" "dependency_getter" {
+  provisioner "local-exec" {
+    command = "echo ${length(var.dependencies)}"
+  }
+}
+
 resource "aws_vpc" "main" {
   cidr_block       = var.vpc_cidr
   instance_tenancy = var.tenancy
@@ -32,6 +39,7 @@ resource "aws_internet_gateway" "gw" {
 
 # Define the route table
 resource "aws_route_table" "private-rt" {
+  depends_on = [null_resource.dependency_getter]
   vpc_id = var.vpc_id
 
   route {
@@ -50,4 +58,3 @@ resource "aws_route_table_association" "priv-rt_main" {
   subnet_id = aws_subnet.main.id
   route_table_id = aws_route_table.private-rt.id
 }
-

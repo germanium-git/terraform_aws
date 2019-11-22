@@ -10,15 +10,16 @@ variable "aws_region" {
   default = "eu-central-1"
 }
 
+/*
 # From home
 variable "ssh_access_from" {
   default = "185.230.173.4/32"
 }
+*/
 
-/*
 # From Swe VPN
 variable "ssh_access_from" {
   default = "193.15.240.60/32"
 }
-*/
+
 
