@@ -11,13 +11,18 @@ variable "aws_region" {
 }
 
 /*
-# From home
-variable "ssh_access_from" {
-  default = "185.230.173.4/32"
-}
+# From home 185.230.173.4/32
+# From work wo VPN 193.179.215.98/32
+# From Fin VPN 131.207.242.5/32
 */
 
 # From Swe VPN
-variable "ssh_access_from" {
+variable "ssh_to_outside" {
   default = "193.15.240.60/32"
 }
+
+# From Fin VPN
+variable "ssh_to_mng" {
+  default = "131.207.242.5/32"
+}
+

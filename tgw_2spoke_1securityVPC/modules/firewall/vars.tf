@@ -10,7 +10,11 @@ variable "instance_type" {
   default = "t2.micro"
 }
 
+# It defines the source IP allowed to access outside interface
 variable "ssh_access_from" {}
+
+# It defines the source IP allowed to access management interface
+variable "access_to_mng" {}
 
 variable "untrust-subnet-a-id" {}
 variable "mgmt-subnet-a-id" {}

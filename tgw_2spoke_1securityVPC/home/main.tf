@@ -17,7 +17,7 @@ module "spoke_vpc-a" {
   tgw-id                        = module.security_vpc.tgw_id
   rtb-security-id               = module.security_vpc.rtb-security-id
   rtb-spoke-id                  = module.security_vpc.rtb-spoke-id
-  ssh_access_from               = var.ssh_access_from
+  ssh_access_from               = var.ssh_to_outside
 }
 
 # Create spoke VPC 2
@@ -39,7 +39,7 @@ module "spoke_vpc-b" {
   tgw-id                        = module.security_vpc.tgw_id
   rtb-security-id               = module.security_vpc.rtb-security-id
   rtb-spoke-id                  = module.security_vpc.rtb-spoke-id
-  ssh_access_from               = var.ssh_access_from
+  ssh_access_from               = var.ssh_to_outside
 }
 
 # Create security VPC
@@ -65,10 +65,11 @@ module "firewall" {
   trust-subnet-a-id   = module.security_vpc.trust-a-subnet-id
   untrust-subnet-a-id = module.security_vpc.untrust-a-subnet-id
   security-vpc-id     = module.security_vpc.security-vpc-id
-  ssh_access_from     = var.ssh_access_from
+  ssh_access_from     = var.ssh_to_outside
   instance_type       = "t2.small"
   ami_id              = "ami-01ccce1a224948c6f"
   key_id              = module.key.key_id
+  access_to_mng       = var.ssh_to_mng
 }
 
 # Create SSH key
@@ -88,7 +89,7 @@ module "test_vm-a" {
   subnet_id       = module.spoke_vpc-a.spoke-subnet-id
   subnet_cidr     = module.spoke_vpc-a.sppke-subnet-cidr
   vpc_id          = module.spoke_vpc-a.spoke-vpc-id
-  ssh_access_from = var.ssh_access_from
+  ssh_access_from = var.ssh_to_outside
   instance_type   = "t2.micro"
   ami_id          = "ami-0cc0a36f626a4fdf5"
   key_id          = module.key.key_id
@@ -105,7 +106,7 @@ module "test_vm-b" {
   subnet_id       = module.spoke_vpc-b.spoke-subnet-id
   subnet_cidr     = module.spoke_vpc-b.sppke-subnet-cidr
   vpc_id          = module.spoke_vpc-b.spoke-vpc-id
-  ssh_access_from = var.ssh_access_from
+  ssh_access_from = var.ssh_to_outside
   instance_type   = "t2.micro"
   ami_id          = "ami-0cc0a36f626a4fdf5"
   key_id          = module.key.key_id

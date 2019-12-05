@@ -35,8 +35,7 @@ resource "aws_instance" "fgvm" {
 resource "aws_network_interface" "mgmt-a" {
   subnet_id = var.mgmt-subnet-a-id
   private_ips = var.mgmt-a-priv-ip
-  security_groups = [
-    aws_security_group.fg-sgroup.id]
+  security_groups = [aws_security_group.fg-mng-sgroup.id]
 
   attachment {
     instance = aws_instance.fgvm.id
@@ -116,4 +115,26 @@ resource "aws_security_group" "fg-sgroup"{
 
 }
 
+
+# Create security group to protect management access
+resource "aws_security_group" "fg-mng-sgroup"{
+  name = "sg_fortigate_mng"
+  description = "Allow management traffic to the mng interface"
+  vpc_id = var.security-vpc-id
+
+  ingress {
+    from_port = 22
+    to_port = 22
+    protocol = "tcp"
+    cidr_blocks = [var.access_to_mng]
+  }
+
+  ingress {
+    from_port = 443
+    to_port = 443
+    protocol = "tcp"
+    cidr_blocks = [var.access_to_mng]
+  }
+
+}
 
