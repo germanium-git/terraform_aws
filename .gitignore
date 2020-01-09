@@ -1,12 +1,14 @@
 # Created by .ignore support plugin (hsz.mobi)
 .vscode
 .idea
-/1region_3vpc_tgw/home/*.tfstate
-/1region_3vpc_tgw/home/*.tfstate.*
-/1region_3vpc_tgw/home/.terraform/*
-/1region_3vpc_tgw/home/terraform.tfvars
+/spoke_vpc/home/*.tfstate
+/spoke_vpc/home/*.tfstate.*
+/spoke_vpc/home/.terraform/*
+/spoke_vpc/home/terraform.tfvars
 
 /tgw_2spoke_1securityVPC/home/*.tfstate
 /tgw_2spoke_1securityVPC/home/*.tfstate.*
 /tgw_2spoke_1securityVPC/home/.terraform/*
 /tgw_2spoke_1securityVPC/home/terraform.tfvars
+
+
