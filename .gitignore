@@ -12,3 +12,7 @@
 /tgw_2spoke_1securityVPC/home/terraform.tfvars
 
 
+*/*.tfstate
+*/*.tfstate.*
+*/.terraform/*
+*/terraform.tfvars
